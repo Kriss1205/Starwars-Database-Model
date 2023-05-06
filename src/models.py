@@ -9,7 +9,7 @@ from eralchemy2 import render_er
 Base = declarative_base()
 
 
-class Person(Base):
+class person(Base):
     __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
@@ -18,27 +18,29 @@ class Person(Base):
     firstName = Column(String(250), nullable=False)
     lastName = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
+    favorites = db.relationship('favorites', backref='person', lazy=True)
 
+# ((EDITED HOW LAURA AND ERNESTO SUGGESTED IN SCREEN SHOT))
 
-class userFavorites(Base):
-    __tablename__ = 'user_favorites'
+class favorites(Base):
+    __tablename__ = 'favorites'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     character_id = Column(Integer, ForeignKey('character.id'))
-    character_planet = Column(Integer, ForeignKey('Planet.id'))
+    character_planet = Column(Integer, ForeignKey('planet.id'))
     
-class Planet(Base):
+class planet(Base):
     __tablename__ = 'Planet'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    Climate = Column(String(250), nullable=True)
-    Diameter = Column(Integer, nullable=True)
-    Gravity = Column(Integer, nullable=True)
-    Population = Column(Integer, nullable=True)
-    Mass = Column(Integer, nullable=True)
+    climate = Column(String(250), nullable=True)
+    diameter = Column(Integer, nullable=True)
+    gravity = Column(Integer, nullable=True)
+    population = Column(Integer, nullable=True)
+    mass = Column(Integer, nullable=True)
     
 
-class Character(Base):
+class character(Base):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
