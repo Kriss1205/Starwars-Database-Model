@@ -18,7 +18,7 @@ class person(Base):
     firstName = Column(String(250), nullable=False)
     lastName = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
-    favorites = db.relationship('favorites', backref='person', lazy=True)
+    favorites = db.relationship('favorites', backref='Person', lazy=True)
 
 # ((EDITED HOW LAURA AND ERNESTO SUGGESTED IN SCREEN SHOT))
 
@@ -27,10 +27,10 @@ class favorites(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     character_id = Column(Integer, ForeignKey('character.id'))
-    character_planet = Column(Integer, ForeignKey('planet.id'))
+    planet_id = Column(Integer, ForeignKey('planet.id'))
     
 class planet(Base):
-    __tablename__ = 'Planet'
+    __tablename__ = 'planet'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     climate = Column(String(250), nullable=True)
@@ -38,7 +38,7 @@ class planet(Base):
     gravity = Column(Integer, nullable=True)
     population = Column(Integer, nullable=True)
     mass = Column(Integer, nullable=True)
-    
+    favorites = db.relationship('favorites', backref='Planet', lazy=True)
 
 class character(Base):
     __tablename__ = 'character'
@@ -52,7 +52,7 @@ class character(Base):
     gender = Column(String(250), nullable=True)
     birthDate = Column(String(250), nullable=True)
     description = Column(String(250), nullable=True)
-
+    favorites = db.relationship('favorites', backref='Character', lazy=True)
 
 # class Address(Base):
 #     __tablename__ = 'address'
